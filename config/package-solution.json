@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "name": "safety-incidents-client-side-solution",
+    "id": "55160da1-b909-4fe8-8abe-e25188612f3c",
+    "version": "1.0.0.0"
+  },
+  "paths": {
+    "zippedPackage": "solution/safety-incidents.sppkg"
+  }
+}
