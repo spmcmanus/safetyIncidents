@@ -8,14 +8,26 @@ import {
     DocumentCardTitle,
     DocumentCardActivity,
     DocumentCardPreview,
-    DocumentCardActions
+    DocumentCardActions,
+    IDocumentCardPreviewProps
 } from 'office-ui-fabric-react/lib/DocumentCard';
+import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 
-const SafetyIncidentList = ({handler,incidents}) => {
+const SafetyIncidentList = ({ handler, incidents }) => {
     // return loading if the incidents state has not yet been set
     if (!incidents) {
         return <div>Loading...</div>;
     }
+    let previewProps: IDocumentCardPreviewProps = {
+    previewImages: [
+      {
+        url: 'http://placehold.it/150x150',
+        imageFit: ImageFit.cover,
+        width: 150,
+        height: 150
+      }
+    ],
+  };
     // return list of incidents
     return (
         <div className={styles.panelStyle} >
@@ -28,13 +40,11 @@ const SafetyIncidentList = ({handler,incidents}) => {
                                 <div className={styles.incidentCardContainer} key={key}>
                                     <DocumentCard
                                         className={styles.incidentCard}
-                                        onClick={handler.bind(this,incident)}>
+                                        onClick={handler.bind(this, incident)}>
+                                        <DocumentCardPreview { ...previewProps } />
+                                        <div className={styles.docCardType}>Safety Incident</div>
                                         <DocumentCardTitle
                                             title={incident.incidentTitle}
-                                            shouldTruncate={true}
-                                        />
-                                        <DocumentCardTitle
-                                            title={incident.incidentNumber}
                                             shouldTruncate={true}
                                         />
                                         <DocumentCardActivity
@@ -55,3 +65,19 @@ const SafetyIncidentList = ({handler,incidents}) => {
 };
 
 export default SafetyIncidentList;
+
+/*
+                                        <DocumentCardActions
+                                            actions={
+                                              [{
+                                                iconProps: { iconName: 'Hospital' },
+                                                onClick: (ev: any) => {
+                                                    console.log('You clicked the share action.');
+                                                    ev.preventDefault();
+                                                    ev.stopPropagation();
+                                                },
+                                                ariaLabel: 'Safety Incident'
+                                              }]
+                                            }
+                                        />
+*/

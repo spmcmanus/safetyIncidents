@@ -20,8 +20,13 @@
     padding: 10px;
     border: 1px solid lightgrey;
     text-align:center;
+    height:50px;
 }
-
+.docCardType {
+    font-size: smaller;
+    margin-left: 15px;
+    color:slategray;
+}
 .titleContainer {
     padding: 15px;
     margin-bottom:20px;
@@ -31,7 +36,7 @@
     font-size:x-large;
     padding:10px;
     margin-bottom:10px;
-
+    padding-top: 15px;
 }
 .incidentRow {
     margin-top:10px;
@@ -56,6 +61,8 @@
 }
 .spacerBox {
     height:80px;
+    background-image: url('background.png');
+    margin-bottom: 10px;
 }
 .incidentLabelSm {
     color:lightslategrey;

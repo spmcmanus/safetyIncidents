@@ -19,7 +19,8 @@ export interface ISafetyIncidentState {
       "type": "",
       "description": ""
     }],
-  incidentIdSelected: string
+  incidentIdSelected: string,
+  showMapPanel: boolean
 }
 
 export default class SafetyIncidentGetItems extends React.Component<ISafetyIncidentsProps, ISafetyIncidentState> {
@@ -37,10 +38,12 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
         "type": "",
         "description": ""
       }],
-      incidentIdSelected: ""
+      incidentIdSelected: "",
+      showMapPanel: false
     };
     this.onCardClick = this.onCardClick.bind(this);
     this.goHome = this.goHome.bind(this);
+    this.showMapPanel = this.showMapPanel.bind(this);
   }
 
   public componentDidMount() {
@@ -53,7 +56,8 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
       success: function (resultData) {
         reactHandler.setState({
           incidents: resultData,
-          incidentIdSelected: ''
+          incidentIdSelected: '',
+          showMapPanel: false
         });
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -67,15 +71,22 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
   public onCardClick(incident, e) {
     this.setState({
       incidents: this.state.incidents,
-      incidentIdSelected: incident.incidentNumber
+      incidentIdSelected: incident.incidentNumber,
+      showMapPanel: false
     });
   }
 
   public goHome() {
     this.setState({
       incidents: this.state.incidents,
-      incidentIdSelected: ''
+      incidentIdSelected: '',
+      showMapPanel: false
     });
+  }
+
+  public showMapPanel() {
+    console.log("opening panel");
+    console.log("this.props from showMapPanel",this.props)
   }
 
   public render(): React.ReactElement<ISafetyIncidentsProps> {
@@ -97,6 +108,7 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
         <SafetyIncidentDetails 
           thisIncident={thisIncident}
           goHome={this.goHome}
+          showMapPanel={this.showMapPanel}
           incidents={this.state.incidents}
         ></SafetyIncidentDetails>
       )
