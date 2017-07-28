@@ -40,7 +40,7 @@ const SafetyIncidentDetails = ({ goHome, showMapPanel, thisIncident, incidents }
               <div className="ms-Grid">
                 <div className="ms-Grid-row">
                   <div className={'ms-Grid-col ' + styles.sm9}>
-                    <div>Safety Incident: {thisIncident.incidentTitle}</div>
+                    <div>Safety Incident: {thisIncident.Title}</div>
                   </div>
                   <div className={'ms-Grid-col ' + styles.sm3}>
                     <Persona
@@ -77,7 +77,7 @@ const SafetyIncidentDetails = ({ goHome, showMapPanel, thisIncident, incidents }
               </div>
               <div className={'ms-Grid-col ' + styles.sm3}>
                 <div className={styles.incidentBox}>
-                  <div>{thisIncident.type}</div>
+                  <div>{thisIncident.incidentType}</div>
                   <div className={styles.incidentLabelSm}>Type</div>
                 </div>
               </div>
@@ -86,7 +86,7 @@ const SafetyIncidentDetails = ({ goHome, showMapPanel, thisIncident, incidents }
               <div className="ms-Grid-row">
                 <div className="ms-Grid-col ms-sm6">
                   <div className={styles.incidentLabel}>Description</div>
-                  <div>{thisIncident.description}</div>
+                  <div>{thisIncident.incidentDesc}</div>
                 </div>
               </div>
             </div>

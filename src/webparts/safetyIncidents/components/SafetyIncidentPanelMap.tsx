@@ -10,7 +10,6 @@ export default class MapPanel extends React.Component<ISafetyIncidentsPanelMapPr
 	}
 
 	public render() {
-		console.log("map panel render",this.props)
 		return (
 			<div>
 				<Panel

@@ -7,17 +7,19 @@ import * as _ from 'lodash';
 import { ISafetyIncidentsProps } from './ISafetyIncidentsProps';
 import SafetyIncidentList from './SafetyIncidentList';
 import SafetyIncidentDetails from './SafetyIncidentDetails';
+import SafetyIncidentDetailsProp from './SafetyIncidentDetailsProp';
+import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 export interface ISafetyIncidentState {
   incidents: [
     {
       "incidentNumber": "",
-      "incidentTitle": "",
+      "Title": "",
       "createdBy": "",
       "location": "",
       "incidentDate": "",
-      "type": "",
-      "description": ""
+      "incidentType": "",
+      "incidentDesc": ""
     }],
   incidentIdSelected: string,
   showMapPanel: boolean
@@ -31,12 +33,12 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
       incidents:
       [{
         "incidentNumber": "",
-        "incidentTitle": "",
+        "Title": "",
         "createdBy": "",
         "location": "",
         "incidentDate": "",
-        "type": "",
-        "description": ""
+        "incidentType": "",
+        "incidentDesc": ""
       }],
       incidentIdSelected: "",
       showMapPanel: false
@@ -44,26 +46,31 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
     this.onCardClick = this.onCardClick.bind(this);
     this.goHome = this.goHome.bind(this);
     this.showMapPanel = this.showMapPanel.bind(this);
+    this.showIncidentFromProperty = this.showIncidentFromProperty.bind(this);
   }
 
   public componentDidMount() {
+
     var reactHandler = this;
+
     jquery.ajax({
-      //url: `${this.props.siteurl}/_api/web/lists/getbytitle('EmployeeList')/items`, 
-      url: "/src/webparts/safetyIncidents/resources/safetyTestData.json",
+      //url: `${this.props.siteUrl}/src/webparts/safetyIncidents/resources/safetyTestData.json`,
+      url: "https://pscgroupllc.sharepoint.com/sites/apps/_api/web/lists/GetByTitle('SafetyIncidents')/Items",
       type: "GET",
+      dataType: "json",
       headers: { 'Accept': 'application/json; odata=verbose;' },
       success: function (resultData) {
         reactHandler.setState({
-          incidents: resultData,
+          //incidents: resultData
+          incidents: resultData.d.results,
           incidentIdSelected: '',
           showMapPanel: false
         });
       },
       error: function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR);
-        console.log(textStatus);
-        console.log(errorThrown);
+        console.log('jqXHR', jqXHR);
+        console.log('text status', textStatus);
+        console.log('error', errorThrown);
       }
     });
   }
@@ -86,7 +93,15 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
 
   public showMapPanel() {
     console.log("opening panel");
-    console.log("this.props from showMapPanel",this.props)
+    console.log("this.props from showMapPanel", this.props)
+  }
+
+  public showIncidentFromProperty() {
+    this.setState({
+      incidents: this.state.incidents,
+      incidentIdSelected: 'Prop',
+      showMapPanel: false
+    });
   }
 
   public render(): React.ReactElement<ISafetyIncidentsProps> {
@@ -94,18 +109,33 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
       return (
         <div>Loading...</div>
       );
+    } else if (this.state.incidentIdSelected == 'Prop') {
+      return (
+        <SafetyIncidentDetailsProp
+          description=''
+          siteUrl=''
+          incidentId={this.props.incidentId}
+        ></SafetyIncidentDetailsProp>
+      )
     } else if (this.state.incidentIdSelected == '') {
       const theseIncidents = this.state.incidents;
       return (
-        <SafetyIncidentList
-          handler={this.onCardClick}
-          incidents={theseIncidents}>
-        </SafetyIncidentList>
+        <div>
+          <PrimaryButton
+            data-automation-id='test'
+            text='Show Default Incident'
+            onClick={this.showIncidentFromProperty}
+          />
+          <SafetyIncidentList
+            handler={this.onCardClick}
+            incidents={theseIncidents}>
+          </SafetyIncidentList>
+        </div>
       );
     } else {
       const thisIncident = _.mapKeys(this.state.incidents, 'incidentNumber')[this.state.incidentIdSelected];
       return (
-        <SafetyIncidentDetails 
+        <SafetyIncidentDetails
           thisIncident={thisIncident}
           goHome={this.goHome}
           showMapPanel={this.showMapPanel}

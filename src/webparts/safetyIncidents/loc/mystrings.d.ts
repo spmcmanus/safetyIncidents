@@ -2,6 +2,7 @@ declare interface ISafetyIncidentsStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
   DescriptionFieldLabel: string;
+  IncidentIdFieldLabel: string;
 }
 
 declare module 'safetyIncidentsStrings' {

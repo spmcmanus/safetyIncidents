@@ -44,7 +44,7 @@ const SafetyIncidentList = ({ handler, incidents }) => {
                                         <DocumentCardPreview { ...previewProps } />
                                         <div className={styles.docCardType}>Safety Incident</div>
                                         <DocumentCardTitle
-                                            title={incident.incidentTitle}
+                                            title={incident.Title}
                                             shouldTruncate={true}
                                         />
                                         <DocumentCardActivity
@@ -65,19 +65,3 @@ const SafetyIncidentList = ({ handler, incidents }) => {
 };
 
 export default SafetyIncidentList;
-
-/*
-                                        <DocumentCardActions
-                                            actions={
-                                              [{
-                                                iconProps: { iconName: 'Hospital' },
-                                                onClick: (ev: any) => {
-                                                    console.log('You clicked the share action.');
-                                                    ev.preventDefault();
-                                                    ev.stopPropagation();
-                                                },
-                                                ariaLabel: 'Safety Incident'
-                                              }]
-                                            }
-                                        />
-*/
