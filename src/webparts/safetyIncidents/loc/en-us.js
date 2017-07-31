@@ -3,6 +3,7 @@ define([], function() {
     "PropertyPaneDescription": "Description",
     "BasicGroupName": "Application Configuration",
     "DescriptionFieldLabel": "Description Field",
-    "IncidentIdFieldLabel" : "Incident Id"
+    "IncidentIdFieldLabel" : "Incident Id",
+    "ShowIncidentCountFieldLabel" : "Show Recent Incidents"
   }
 });

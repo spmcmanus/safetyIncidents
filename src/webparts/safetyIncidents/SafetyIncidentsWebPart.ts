@@ -6,7 +6,8 @@ import { Version } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  PropertyPaneSlider,
 } from '@microsoft/sp-webpart-base';
 // Custom Components
 import * as strings from 'safetyIncidentsStrings';
@@ -25,17 +26,18 @@ export default class SafetyIncidentsWebPart extends BaseClientSideWebPart<ISafet
     const loaderConfig: IClientSideComponentLoaderConfiguration = this.context.manifest.loaderConfig;
     let baseUrl: string = loaderConfig.internalModuleBaseUrls[0] +
       (loaderConfig.scriptResources[loaderConfig.entryModuleId] as IPathModuleConfiguration).path;
-    return baseUrl.substr(0, baseUrl.lastIndexOf('/dist')+1);
+    return baseUrl.substr(0, baseUrl.lastIndexOf('/dist') + 1);
   }
-  
+
   public render(): void {
-    const mySiteUrl:string = this.getBaseBundleUrl();
-    const element: React.ReactElement<ISafetyIncidentsProps > = React.createElement(
+    const mySiteUrl: string = this.getBaseBundleUrl();
+    const element: React.ReactElement<ISafetyIncidentsProps> = React.createElement(
       SafetyIncidents,
       {
         description: this.properties.description,
         siteUrl: mySiteUrl,
-        incidentId: this.properties.incidentId
+        incidentId: this.properties.incidentId,
+        showRecentIncidents: this.properties.showRecentIncidents
       }
     );
 
@@ -60,8 +62,17 @@ export default class SafetyIncidentsWebPart extends BaseClientSideWebPart<ISafet
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                //PropertyPaneTextField('description', {label: strings.DescriptionFieldLabel}),
-                PropertyPaneTextField('incidentId', {label: strings.IncidentIdFieldLabel})
+                PropertyPaneTextField('incidentId', { 
+                  label: strings.IncidentIdFieldLabel 
+                }),
+                PropertyPaneSlider('showRecentIncidents', {
+                  label: "Show Recent Incidents",
+                  min: 1,
+                  max: 5,
+                  value: 5,
+                  showValue: true,
+                  step: 1
+                })
               ]
             }
           ]

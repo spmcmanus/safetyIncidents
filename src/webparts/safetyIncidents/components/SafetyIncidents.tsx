@@ -8,6 +8,7 @@ import { ISafetyIncidentsProps } from './ISafetyIncidentsProps';
 import SafetyIncidentList from './SafetyIncidentList';
 import SafetyIncidentDetails from './SafetyIncidentDetails';
 import SafetyIncidentDetailsProp from './SafetyIncidentDetailsProp';
+import SafetyIncidentDetailEntry from './SafetyIncidentDetailsEntry';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 export interface ISafetyIncidentState {
@@ -19,7 +20,8 @@ export interface ISafetyIncidentState {
       "location": "",
       "incidentDate": "",
       "incidentType": "",
-      "incidentDesc": ""
+      "incidentDesc": "",
+      "incidentPhotos": "",
     }],
   incidentIdSelected: string,
   showMapPanel: boolean
@@ -38,7 +40,8 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
         "location": "",
         "incidentDate": "",
         "incidentType": "",
-        "incidentDesc": ""
+        "incidentDesc": "",
+        "incidentPhotos": ""
       }],
       incidentIdSelected: "",
       showMapPanel: false
@@ -47,6 +50,7 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
     this.goHome = this.goHome.bind(this);
     this.showMapPanel = this.showMapPanel.bind(this);
     this.showIncidentFromProperty = this.showIncidentFromProperty.bind(this);
+    this.createIncident = this.createIncident.bind(this);
   }
 
   public componentDidMount() {
@@ -91,6 +95,16 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
     });
   }
 
+  public createIncident() {
+    console.log('create incident')
+    console.log(this)
+    this.setState({
+      incidents: this.state.incidents,
+      incidentIdSelected: 'New',
+      showMapPanel: false
+    });
+  }
+
   public showMapPanel() {
     console.log("opening panel");
     console.log("this.props from showMapPanel", this.props)
@@ -115,7 +129,13 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
           description=''
           siteUrl=''
           incidentId={this.props.incidentId}
+          showRecentIncidents={this.props.showRecentIncidents}
         ></SafetyIncidentDetailsProp>
+      )
+    } else if (this.state.incidentIdSelected == 'New') {
+      console.log("New incident")
+      return (
+        <SafetyIncidentDetailEntry></SafetyIncidentDetailEntry>
       )
     } else if (this.state.incidentIdSelected == '') {
       const theseIncidents = this.state.incidents;
@@ -125,11 +145,17 @@ export default class SafetyIncidentGetItems extends React.Component<ISafetyIncid
             data-automation-id='test'
             text='Show Default Incident'
             onClick={this.showIncidentFromProperty}
+          />  <PrimaryButton
+            data-automation-id='test2'
+            text='Add New Incident'
+            iconProps={{ iconName: 'Add' }}
+            onClick={this.createIncident}
           />
           <SafetyIncidentList
+            showRecentIncidents={this.props.showRecentIncidents}
+            incidents={this.state.incidents}
             handler={this.onCardClick}
-            incidents={theseIncidents}>
-          </SafetyIncidentList>
+          ></SafetyIncidentList>
         </div>
       );
     } else {

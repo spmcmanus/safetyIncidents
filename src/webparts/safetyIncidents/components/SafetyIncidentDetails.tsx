@@ -27,7 +27,7 @@ const imageProps: IImageProps = {
 
 // safety incident detail markup
 const SafetyIncidentDetails = ({ goHome, showMapPanel, thisIncident, incidents }) => {
-
+  console.log(thisIncident)
   if (!thisIncident) {
     return <div>Loading...</div>;
   }
@@ -42,7 +42,7 @@ const SafetyIncidentDetails = ({ goHome, showMapPanel, thisIncident, incidents }
                   <div className={'ms-Grid-col ' + styles.sm9}>
                     <div>Safety Incident: {thisIncident.Title}</div>
                   </div>
-                  <div className={'ms-Grid-col ' + styles.sm3}>
+                  <div className={'ms-Grid-col ms-sm3'}>
                     <Persona
                       className={styles.floatRight}
                       primaryText={thisIncident.createdBy}
@@ -84,7 +84,7 @@ const SafetyIncidentDetails = ({ goHome, showMapPanel, thisIncident, incidents }
             </div>
             <div className={styles.incidentRow}>
               <div className="ms-Grid-row">
-                <div className="ms-Grid-col ms-sm6">
+                <div className="ms-Grid-col ms-sm12">
                   <div className={styles.incidentLabel}>Description</div>
                   <div>{thisIncident.incidentDesc}</div>
                 </div>
@@ -92,10 +92,10 @@ const SafetyIncidentDetails = ({ goHome, showMapPanel, thisIncident, incidents }
             </div>
             <div className={styles.incidentRow}>
               <div className="ms-Grid-row">
-                <div className="ms-Grid-col ms-sm6">
+                <div className="ms-Grid-col ms-sm12">
                   <div className={styles.incidentLabel}>Pictures</div>
                   <div>
-                    <Image { ...imageProps as any } width={150} height={150} className={styles.images} />
+                    <Image src={thisIncident.incidentPhotos.Url} imageFit={ImageFit.contain} width={150} height={150} className={styles.images} />
                     <Image { ...imageProps as any } width={150} height={150} className={styles.images} />
                     <Image { ...imageProps as any } width={150} height={150} className={styles.images} />
                     <Image { ...imageProps as any } width={150} height={150} className={styles.images} />
